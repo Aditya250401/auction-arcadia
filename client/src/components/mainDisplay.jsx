@@ -18,16 +18,14 @@ const MainDisplay = () => {
 				<div className="wrapper">
 					<Teams onHrefClick={handleHrefClick} />
 					<div className="main-container">
-						<div className="main-header">
+						{/* <div className="main-header">
 							<a className="menu-link-main" href="#">
 								E-Summit'23
 							</a>
 							<div className="header-menu">
-								<a className="main-header-link" href="#">
-									<h3>Auction Arcadia</h3>
-								</a>
+								{this.renderHeaderLink()}
 							</div>
-						</div>
+						</div> */}
 						<MainSection componentId={componentId} />
 					</div>
 				</div>

@@ -4,6 +4,7 @@ import PlayerInfo from './playerInfo'
 import axios from 'axios'
 import TeamsCollection from './teamsCollection'
 import AddPlayer from './addplayer'
+import VideoList from './videoList'
 
 const TeamCollectionWithId = ({ teamId }) => {
 	return <TeamsCollection teamId={teamId} />
@@ -28,7 +29,6 @@ const MainSection = ({ componentId }) => {
 			return newPlayerId >= 0 ? newPlayerId : prevPlayerId
 		})
 	}
-
 	useEffect(() => {
 		const handleKeyPress = (event) => {
 			if (event.key === 'ArrowLeft') {
@@ -43,10 +43,27 @@ const MainSection = ({ componentId }) => {
 		}
 	}, [])
 
+	const myplayer = user && user.data
+	if (!myplayer) return null
+
+	const { role } = myplayer
+	console.log(role)
+
+	let mainContainerClass = 'content-wrapper'
+	if (role === 'Batsman') {
+		mainContainerClass += ' batsman-background'
+	} else if (role === 'Bowler') {
+		mainContainerClass += ' bowler-background'
+	} else if (role === 'All Rounder') {
+		mainContainerClass += ' allrounder-background'
+	} else if (role === 'Wicket Keeper') {
+		mainContainerClass += ' wicketkeeper-background'
+	}
+
 	switch (componentId) {
 		case 1:
 			return (
-				<div className="content-wrapper">
+				<div className={mainContainerClass}>
 					<PlayerInfo user={user} />
 				</div>
 			)
@@ -60,12 +77,17 @@ const MainSection = ({ componentId }) => {
 		case 9:
 		case 10:
 		case 11:
+		case 12:
+		case 13:
+		case 14:
+		case 15:
+		case 16:
 			return (
 				<div className="content-wrapper">
 					<TeamCollectionWithId teamId={componentId} />
 				</div>
 			)
-		case 12:
+		case 17:
 			return (
 				<div className="content-wrapper">
 					<AddPlayer />

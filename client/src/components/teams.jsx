@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import './master.css'
-import TeamsCollection from './teamsCollection'
 
 const Teams = ({ onHrefClick }) => {
 	const [selectedTeam, setSelectedTeam] = useState('')
@@ -14,8 +13,13 @@ const Teams = ({ onHrefClick }) => {
 		{ id: 7, name: 'Sunrisers Hyderabad' },
 		{ id: 8, name: 'Rajasthan Royals' },
 		{ id: 9, name: 'Delhi Capitals' },
-		{ id: 10, name: 'Deccan Chargers' },
-		{ id: 11, name: 'Pune Warriors' },
+		{ id: 10, name: 'Gujrat Titans' },
+		{ id: 11, name: 'Lucknow super giants' },
+		{ id: 12, name: 'Sydeney Sixers' },
+		{ id: 13, name: 'Melbourne Stars' },
+		{ id: 14, name: 'Adelaide Strikers' },
+		{ id: 15, name: 'Hobart Hurricanes' },
+		{ id: 16, name: 'pert scorchers' },
 	]
 
 	return (
@@ -41,7 +45,7 @@ const Teams = ({ onHrefClick }) => {
 								{team.name}
 							</a>
 						))}
-						<a href="#addplayer" onClick={() => onHrefClick(12)}>
+						<a href="#addplayer" onClick={() => onHrefClick(17)}>
 							Add player
 						</a>
 					</div>
