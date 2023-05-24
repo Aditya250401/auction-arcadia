@@ -1,51 +1,37 @@
 const mongoose = require('mongoose')
 
-const PlayerSchema = new mongoose.Schema({
-	player: {
-		type: String,
-	},
-	team: {
-		type: String,
-	},
-	role: {
-		type: String,
-	},
-	matches: {
-		type: String,
-	},
-	runs: {
-		type: String,
-	},
-	wickets: {
-		type: String,
-	},
-	average: {
-		type: String,
-	},
-	strike_rate: {
-		type: String,
-	},
-	economy: {
-		type: String,
-	},
-	base_price: {
-		type: String,
-	},
-	video: {
-		type: String,
-	},
-	FP: {
-		type: Boolean,
-	},
-	Selected: {
-		type: Boolean,
-	},
+const playerSchema = new mongoose.Schema({
 	slug_id: {
 		type: Number,
-		required: true,
-		unique: true,
+	},
+	player_name: {
+		type: String,
+	},
+	player_stats: {
+		type: {
+			matches: String,
+			runs: Number,
+			average: Number,
+			strike_rate: Number,
+			wickets: String,
+			economy: String,
+		},
+	},
+	player_basePrice: {
+		type: String,
+	},
+	player_currentPrice: {
+		type: String,
+	},
+	player_team: {
+		type: String,
+	},
+	player_role: {
+		type: String,
+	},
+	player_video: {
+		type: String,
 	},
 })
 
-const Player = mongoose.model('Player', PlayerSchema)
-module.exports = Player
+module.exports = mongoose.model('Player', playerSchema)

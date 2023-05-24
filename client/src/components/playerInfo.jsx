@@ -1,57 +1,74 @@
 import React, { useState, useEffect } from 'react'
 import './try1.css'
 import './master.css'
+import { useFetchAllPlayersQuery } from '../store/Api/playerApi'
 
-function PlayerInfo(props) {
-	console.log('props', props)
-	const myplayer = props.user && props.user.data
-	if (!myplayer) return null
+function PlayerInfo({ playerId, setRole }) {
+	const { data: players = [], error, isLoading } = useFetchAllPlayersQuery()
 
-	const {
-		slug_id,
-		player,
-		role,
-		wickets,
-		matches,
-		economy,
-		runs,
-		average,
-		base_price,
-		strike_rate,
-		video,
-	} = myplayer
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const [selectedVideo, setSelectedVideo] = useState(null)
-
-	// eslint-disable-next-line react-hooks/rules-of-hooks
 	useEffect(() => {
-		const handleKeyPress = (event) => {
-			if (event.key === 'm') {
-				setSelectedVideo(null)
-			} else if (event.key === 'n') {
-				handleVideoClick(event, video)
+		if (players && players[playerId]) {
+			const { player_role: role, player_video: video } = players[playerId]
+			setRole(role)
+
+			const handleKeyPress = (event) => {
+				if (event.key === 'm') {
+					setSelectedVideo(null)
+				} else if (event.key === 'n') {
+					handleVideoClick(event, video)
+				}
+			}
+
+			document.addEventListener('keydown', handleKeyPress)
+			return () => {
+				document.removeEventListener('keydown', handleKeyPress)
 			}
 		}
-		document.addEventListener('keydown', handleKeyPress)
-		return () => {
-			document.removeEventListener('keydown', handleKeyPress)
-		}
-	})
+	}, [playerId, players, setRole])
 
-	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const [selectedVideo, setSelectedVideo] = useState(null)
 
 	const handleVideoClick = (event, video) => {
 		event.preventDefault()
 		setSelectedVideo(
 			<iframe
+				title="video"
 				src={video}
 				width="1150vw"
 				height="850vh"
-				frameBorder="0"
 				allowFullScreen
 			></iframe>
 		)
 	}
+
+	if (isLoading) {
+		return <div>player is loading...</div>
+	}
+
+	if (error) {
+		return <div>Oh no, there was an error</div>
+	}
+
+	if (!players) {
+		return null
+	}
+
+	const myPlayer = players[playerId]
+
+	if (!myPlayer) {
+		return null
+	}
+
+	const {
+		slug_id,
+		player_basePrice: base_price,
+		player_currentPrice: current_price,
+		player_name: player,
+		player_role: role,
+		player_stats: { average, economy, matches, runs, strike_rate, wickets },
+		player_team: team,
+		player_video: video,
+	} = myPlayer
 
 	if (selectedVideo) {
 		return (
@@ -76,7 +93,6 @@ function PlayerInfo(props) {
 			<div className="container">
 				<div className="player-photo ">
 					<img src={`/images/${player}.png`} alt={player} />
-					{console.log(`my player-----------/images/${player}.png`)}
 				</div>
 				<div className="app-card" style={{ width: '40vw' }}>
 					<div className="content-section-title">Statistics</div>
@@ -88,19 +104,19 @@ function PlayerInfo(props) {
 							<h3>Matches</h3>
 							<p>{matches}</p>
 						</div>
-						{runs !== '' && (
+						{runs !== null && (
 							<div className="stat">
 								<h3>Runs</h3>
 								<p>{runs}</p>
 							</div>
 						)}
-						{strike_rate !== '' && (
+						{strike_rate !== null && (
 							<div className="stat">
 								<h3>Strike Rate</h3>
 								<p>{strike_rate}</p>
 							</div>
 						)}
-						{average !== '' && (
+						{average !== null && (
 							<div className="stat">
 								<h3>Average</h3>
 								<p>{average}</p>
@@ -127,7 +143,7 @@ function PlayerInfo(props) {
 						<a
 							className="stat"
 							key={slug_id}
-							href="#"
+							href="#video"
 							onClick={(event) => handleVideoClick(event, video)}
 						>
 							"play video"
@@ -140,50 +156,3 @@ function PlayerInfo(props) {
 }
 
 export default PlayerInfo
-
-// <>
-// 	<div className="content-wrapper-header">
-// 		<div className="content-wrapper-context">
-// 			<div className="img-content">
-// 				<h1>{player}</h1>
-// 			</div>
-
-// 			<h3>{role}</h3>
-// 		</div>
-// 		<div className="app-card">
-// 			<img
-// 				className="content-wrapper-img"
-// 				src="./sac_Small-removebg-preview.png"
-// 				alt=""
-// 			/>
-// 		</div>
-// 	</div>
-// 	<div className="content-section">
-// 		<div className="content-section-title">Statistics</div>
-// 		<ul>
-// 			<li className="adobe-product">
-// 				<div className="products">Matches: {matches}</div>
-// 				<span className="status"> runs: {runs}</span>
-// 				<div className="button-wrapper">
-// 					<span className="products">Wickets: {wickets}</span>
-// 				</div>
-// 			</li>
-// 			<li className="adobe-product">
-// 				<div className="products">Average: {average}</div>
-// 				<span className="status">
-// 					<span className=""></span>
-// 					Strike Rate: {strike_rate}
-// 				</span>
-// 				<div className="button-wrapper">
-// 					<span className="products">Economy: {economy}</span>
-// 				</div>
-// 			</li>
-// 		</ul>
-// 	</div>
-
-// 	<div className="base-price">
-// 		<div className="app-card">
-// 			<span className="something">Base Price: {base_price}</span>
-// 		</div>
-// 	</div>
-// </>

@@ -1,89 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-function convertNumberToWords(number) {
-	const ones = [
-		'',
-		'one',
-		'two',
-		'three',
-		'four',
-		'five',
-		'six',
-		'seven',
-		'eight',
-		'nine',
-	]
-	const tens = [
-		'',
-		'ten',
-		'twenty',
-		'thirty',
-		'forty',
-		'fifty',
-		'sixty',
-		'seventy',
-		'eighty',
-		'ninety',
-	]
-	const teens = [
-		'eleven',
-		'twelve',
-		'thirteen',
-		'fourteen',
-		'fifteen',
-		'sixteen',
-		'seventeen',
-		'eighteen',
-		'nineteen',
-	]
-	const suffixes = ['thousand', 'million', 'billion', 'trillion']
-
-	// handle zero and empty input
-	if (number === 0) return 'zero'
-	if (number === '') return ''
-
-	// convert word form to numeric form
-	if (isNaN(number)) {
-		number = number.split(/\s+/).reduce((acc, word) => {
-			if (word === 'and') return acc
-			if (word in ones) return acc + ones.indexOf(word)
-			if (word in tens) return acc + 10 * tens.indexOf(word)
-			if (word in teens) return acc + teens.indexOf(word) + 11
-			if (word === 'hundred') return acc * 100
-			if (suffixes.includes(word))
-				return acc * Math.pow(1000, suffixes.indexOf(word) + 1)
-			return acc
-		}, 0)
-	}
-
-	// handle numeric form
-	if (number < 10) return ones[number]
-	if (number < 20) return teens[number - 11]
-	if (number < 100)
-		return tens[Math.floor(number / 10)] + ' ' + ones[number % 10]
-	if (number < 1000) {
-		const hundredthDigit = Math.floor(number / 100)
-		const remainder = number % 100
-		return (
-			ones[hundredthDigit] +
-			' hundred' +
-			(remainder === 0 ? '' : ' and ' + convertNumberToWords(remainder))
-		)
-	}
-	for (let i = suffixes.length - 1; i >= 0; i--) {
-		const suffix = Math.pow(1000, i + 1)
-		if (number >= suffix) {
-			const thousands = Math.floor(number / suffix)
-			const remainder = number % suffix
-			return (
-				convertNumberToWords(thousands) +
-				' ' +
-				suffixes[i] +
-				(remainder === 0 ? '' : ', ' + convertNumberToWords(remainder))
-			)
-		}
-	}
-}
 
 function AddPlayer() {
 	const [selectedTeam, setSelectedTeam] = useState('')
@@ -174,7 +90,6 @@ function AddPlayer() {
 				value={basePrice}
 				onChange={handleBasePriceChange}
 			/>
-			{console.log('ffffff', convertNumberToWords(basePrice))}
 
 			<br />
 
