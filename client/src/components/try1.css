@@ -63,12 +63,10 @@
 
 .stat p {
 	display: flex;
-
 	justify-content: center;
 	align-items: center;
 	margin-top: 0;
 	margin-bottom: 0;
-
 	font-size: 2rem;
 }
 .playerName {

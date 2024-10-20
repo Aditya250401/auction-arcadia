@@ -32,6 +32,10 @@ const playerSchema = new mongoose.Schema({
 	player_video: {
 		type: String,
 	},
+	player_sold: {
+		type: Boolean,
+		default: false,
+	},
 })
 
 module.exports = mongoose.model('Player', playerSchema)
