@@ -24,7 +24,7 @@
 
 ## About The Project
 
-![Screen Shot](version%202/docs/images/screenshot.png)
+![Screen Shot](version_2/docs/images/screenshot.png)
 
 The "IPL Auction App" is an interactive and engaging platform built with Next.js and Express. It allows users to simulate IPL auctions, bid for players, and manage their dream teams. With its user-friendly design and real-time updates, the "IPL Auction App" provides an immersive experience for cricket enthusiasts. Create your ultimate team, strategize your bids, and enjoy the thrill of the auction with the "IPL Auction App".
 
